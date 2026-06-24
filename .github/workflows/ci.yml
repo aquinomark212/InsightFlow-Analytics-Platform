@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v4 
 
       - name: Build Docker Image
-        run: docker build -t insightflow  .
+        run: docker build -t insightflow-backend  ./backend
