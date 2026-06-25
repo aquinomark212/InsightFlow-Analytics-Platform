@@ -1,0 +1,37 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+.env/
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+*.log
+
+# Tests / coverage
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Git
+.git/
+.gitignore
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker config files (optional)
+Dockerfile
+docker-compose.yml
