@@ -15,18 +15,24 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
 
-    if (!username) { setError("Please enter your username or email."); return; }
-    if (!password) { setError("Please enter your password."); return; }
+    if (!username) {
+      setError("Please enter your username or email.");
+      return;
+    }
+    if (!password) {
+      setError("Please enter your password.");
+      return;
+    }
 
     setLoading(true);
 
     try {
-      const data = await apiFetch("/login/", {
+      const data = await apiFetch("login/", {
         method: "POST",
         body: JSON.stringify({ username, password }),
       });
       console.log("Login successful:", data);
-      router.push("/dashboard");
+      router.push("/dashboard/");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -339,7 +345,13 @@ export default function LoginPage() {
           {/* Brand */}
           <div className="brand">
             <div className="brand-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <polyline
                   points="1,14 5,8 8,11 12,4 17,7"
                   stroke="white"
@@ -368,7 +380,11 @@ export default function LoginPage() {
           {/* Error */}
           {error && (
             <div className="error-msg" role="alert">
-              <i className="ti ti-alert-circle" aria-hidden="true" style={{ fontSize: 15, flexShrink: 0 }} />
+              <i
+                className="ti ti-alert-circle"
+                aria-hidden="true"
+                style={{ fontSize: 15, flexShrink: 0 }}
+              />
               <span>{error}</span>
             </div>
           )}
@@ -384,7 +400,10 @@ export default function LoginPage() {
                   placeholder="your@email.com"
                   autoComplete="username"
                   value={username}
-                  onChange={(e) => { setUsername(e.target.value); setError(""); }}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    setError("");
+                  }}
                 />
                 <i className="ti ti-user i-icon" aria-hidden="true" />
               </div>
@@ -399,7 +418,10 @@ export default function LoginPage() {
                   placeholder="••••••••••"
                   autoComplete="current-password"
                   value={password}
-                  onChange={(e) => { setPassword(e.target.value); setError(""); }}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setError("");
+                  }}
                 />
                 <i className="ti ti-lock i-icon" aria-hidden="true" />
               </div>
@@ -421,10 +443,16 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="divider"><span>or</span></div>
+          <div className="divider">
+            <span>or</span>
+          </div>
 
           <button className="sso-btn" type="button">
-            <i className="ti ti-building" aria-hidden="true" style={{ fontSize: 16 }} />
+            <i
+              className="ti ti-building"
+              aria-hidden="true"
+              style={{ fontSize: 16 }}
+            />
             Continue with SSO
           </button>
 
@@ -436,3 +464,4 @@ export default function LoginPage() {
     </>
   );
 }
+// TEST FROM CONTAINER Sat Jun 27 03:08:58 UTC 2026

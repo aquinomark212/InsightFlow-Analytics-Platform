@@ -106,7 +106,7 @@ export default function DashboardPage() {
     try {
       setLoadingPrediction(true);
 
-      const res = await apiFetch("/ml/predict/");
+      const res = await apiFetch("ml/predict/");
 
       setData(res.historical_data ?? []);
       setPrediction(res.prediction_next_day ?? 0);
@@ -129,7 +129,7 @@ export default function DashboardPage() {
   }, [data, prediction]);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://127.0.0.1:8000/ws/dashboard/");
+    const socket = new WebSocket("ws://localhost/ws/dashboard/");
 
     socket.onopen = () => {
       console.log("WebSocket connected");
@@ -188,7 +188,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    apiFetch("/dashboard")
+    apiFetch("dashboard/")
       .then((data) => {
         setDashboard({
           ...data,

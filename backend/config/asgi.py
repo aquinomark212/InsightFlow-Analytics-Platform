@@ -6,7 +6,7 @@ from core.routing import websocket_urlpatterns
 
 os.environ.setdefault(
     'DJANGO_SETTINGS_MODULE',
-     'backend.settings'
+    os.getenv('DJANGO_SETTINGS_MODULE')
 )
 
 application = ProtocolTypeRouter({

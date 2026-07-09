@@ -49,7 +49,7 @@ export async function login(data: LoginPayload) {
 
 
 export async function apiFetch(endpoint: string, options: RequestInit = {}) {
-  const res = await fetch(`${API_URL}${endpoint}`, {
+  const res = await fetch(`${API_URL}/${endpoint}`, {
     ...options,
     headers: {
       "X-MY-SECRET-KEY": API_KEY,

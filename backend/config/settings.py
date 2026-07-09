@@ -15,10 +15,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ulec)+vvfe6hnzsu#79=yr(sbt0*a6b3atcm3lui^6s7abi0ji'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -53,10 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'channels',
    
-
-
-
-     
+ 
 ]
 
 SITE_ID = 1
@@ -97,7 +90,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -114,52 +107,60 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
-
+WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+DB_NAME=os.getenv("DB_NAME", "insightflow")
+DB_USER=os.getenv("DB_USER", "postgres")
+DB_PASSWORD=os.getenv("DB_PASSWORD", "admin")
+DB_HOST=os.getenv("DB_HOST")
+DB_PORT=int(os.getenv("DB_PORT", 5432))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'insightflow',       # your database name
-        'USER': 'postgres',           # your DB username
-        'PASSWORD': 'admin',  # your DB password
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': DB_NAME,       # your database name
+        'USER': DB_USER,           # your DB username
+        'PASSWORD': DB_PASSWORD,  # your DB password
+        'HOST': DB_HOST, # "localhost" change this if you want to run Local Server
+        'PORT': DB_PORT,
     }
 }
+
+REDIS_HOST=os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT=int(os.getenv("REDIS_PORT", "6379"))
 
 # Redis settings for django-rq
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
         'DB': 0,
         'DEFAULT_TIMEOUT': 360,
     }, 
     'events': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
         'DB': 1,
         'DEFAULT_TIMEOUT': 360,
     },
     'cache': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
         'DB': 1,
         'DEFAULT_TIMEOUT': 360,
     },
     'analytics': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
         'DB': 1,
         'DEFAULT_TIMEOUT': 360,
     },
     'notifications': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': REDIS_HOST,
+        'PORT': REDIS_PORT,
         'DB': 1,
         'DEFAULT_TIMEOUT': 360,
     }
@@ -210,7 +211,7 @@ RQ = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://redis:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -227,7 +228,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     "x-my-secret-key",
 ]
 
-ASGI_APPLICATION = 'backend.asgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 CHANNEL_LAYERS = {
     "default": {

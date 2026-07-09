@@ -2,7 +2,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
 
 export async function checkAuth() {
-  const res = await fetch(`${API_URL}/dashboard`, {
+  const res = await fetch(`${API_URL}/dashboard/`, {
     headers: {
       "X-MY-SECRET-KEY": API_KEY,
     },

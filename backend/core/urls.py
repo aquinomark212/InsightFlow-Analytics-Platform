@@ -32,6 +32,7 @@ urlpatterns = [
     path('analytics/funnel/', FunnelAnalyticsView.as_view(), name='analytics'),
     path('ml/training-data', MLTrainingDataView.as_view(), name='ml-training-data'),
     path("ml/predict/", MLPredictionView.as_view()),
-    path("ml/validate/", PredictionValidationAPIView.as_view()
+    path("ml/validate/", PredictionValidationAPIView.as_view(),
+    path("health/", lambda request: JsonResponse({"status": "ok"}))
 ),
 ]

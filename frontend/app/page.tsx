@@ -11,8 +11,8 @@ export default function Home() {
           The front door is ready.
         </h1>
         <p className="text-base leading-7 text-foreground/70 sm:text-lg">
-          Head to the login screen to access the workspace and continue into
-          the dashboard.
+          Head to the login screen to access the workspace and continue into the
+          dashboard.
         </p>
         <div className="flex justify-center">
           <Link
