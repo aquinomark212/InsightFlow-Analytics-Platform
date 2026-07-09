@@ -38,7 +38,7 @@ jobs:
 
           # Frontend ENV
           NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
-          NEXT_PUBLIC_API_KEY=${{secets.NEXT_PUBLIC_API_KEY}}
+          NEXT_PUBLIC_API_KEY=${{secrets.NEXT_PUBLIC_API_KEY}}
 
           # Not neeeded for now
           # SECRET_KEY=${{ secrets.SECRET_KEY }}
