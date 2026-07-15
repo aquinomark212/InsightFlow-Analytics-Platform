@@ -99,7 +99,7 @@ export default function DashboardPage() {
   const [data, setData] = useState<number[]>([]);
   const [prediction, setPrediction] = useState<number>(0);
   const [loadingPrediction, setLoadingPrediction] = useState(true);
-
+  const WS_URL = process.env.NEXT_PUBLIC_WS_URL!;
   const router = useRouter();
 
   const fetchPrediction = async () => {
@@ -129,7 +129,7 @@ export default function DashboardPage() {
   }, [data, prediction]);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost/ws/dashboard/");
+    const socket = new WebSocket(WS_URL);
 
     socket.onopen = () => {
       console.log("WebSocket connected");
