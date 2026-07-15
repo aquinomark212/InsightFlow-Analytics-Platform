@@ -31,19 +31,25 @@ jobs:
           REDIS_HOST=${{ secrets.REDIS_HOST }}
           REDIS_PORT=${{ secrets.REDIS_PORT }}
 
-          # Root ENV for Docker-Compose
-          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-
-          # Frontend ENV
-          NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
-          NEXT_PUBLIC_API_KEY=${{secrets.NEXT_PUBLIC_API_KEY}}
-
           # Not neeeded for now
           # SECRET_KEY=${{ secrets.SECRET_KEY }}
           # DEBUG=False
           # ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}
+          EOF
+
+      - name: Create Root Environment File
+        run: |
+          cat <<EOF > .env
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          EOF
+
+      - name: Create Frontend Environment File
+        run: |
+          cat <<EOF > frontend/.env
+          NEXT_PUBLIC_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}
+          NEXT_PUBLIC_API_KEY=${{secrets.NEXT_PUBLIC_API_KEY}}
           EOF
 
       - name: Build Docker Compose Service
@@ -54,15 +60,28 @@ jobs:
 
       - name: Wait for Backend
         run: |
-          echo "Waiting for backend..." 
-          sleep 30
+          echo "Waiting for backend..."
+          for i in {1..30}; do
+            if curl --fail --silent --show-error http://localhost:8000/api/health/; then
+              echo "Backend is ready"
+              exit 0
+            fi
+
+            echo "Backend not ready yet..."
+            sleep 2
+          done
+
+          echo "Backend did not become ready"
+          docker compose ps
+          docker compose logs backend
+          exit 1
 
       - name: Check Running Containers
         run: docker compose ps
 
       - name: Check Backend Health
         run: |
-          curl --fail http://localhost:8000/api/health || exit 1
+          curl --fail http://localhost:8000/api/health/ || exit 1
 
       - name: Show Container Logs on Failure
         if: failure()

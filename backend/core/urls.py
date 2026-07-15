@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.urls import path
 from .views import RegisterView
 from .views import TestAuthWithView
@@ -27,12 +28,11 @@ urlpatterns = [
     path('event/count/', EventCountView.as_view(), name='event-count'),
     path('event/daily/', EventDailyView.as_view()),
     path('event/top/', TopEventTypesView.as_view()),
-    path('dashboard/', DashboardView.as_view()),\
+    path('dashboard/', DashboardView.as_view()),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('analytics/funnel/', FunnelAnalyticsView.as_view(), name='analytics'),
     path('ml/training-data', MLTrainingDataView.as_view(), name='ml-training-data'),
     path("ml/predict/", MLPredictionView.as_view()),
-    path("ml/validate/", PredictionValidationAPIView.as_view(),
-    path("health/", lambda request: JsonResponse({"status": "ok"}))
-),
+    path("ml/validate/", PredictionValidationAPIView.as_view()),
+    path("health/", lambda request: JsonResponse({"status": "ok"})),
 ]
