@@ -220,7 +220,7 @@ CACHES = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://insightflow-analytics-platform-gbki.onrender.com"
+    "https://insightflow-analytics-platform.onrender.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
